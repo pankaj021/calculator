@@ -43,3 +43,9 @@ body {
   border: 2px solid skyblue;
   text-align: end;
 }
+button {
+  margin: 2rem 0 !important;
+}
+.equal-op {
+  background: lightblue;
+}
