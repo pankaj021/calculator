@@ -1,0 +1,10 @@
+.tic-tac-wrp {
+  width: 25% !important;
+}
+.tic-tac-result {
+  margin: 1rem 0;
+  text-align: center;
+}
+.tic-tac-wrp .btn-cell {
+  padding: 2rem !important;
+}

@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Calculator from './Calculator';
+import TicTacToe from './TicTacToe'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <Calculator/>, document.getElementById('root'));
+  <TicTacToe/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls. Learn
