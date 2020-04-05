@@ -15,7 +15,7 @@ function div(o1, o2) {
     return o1 / o2
 }
 
-const operatorMap = {
+const oprMap = {
     "+": add,
     "-": sub,
     "*": mul,
@@ -50,7 +50,7 @@ export default class Calculator extends React.Component {
     }
     onClickCalculate = () => {
         const {o1, o2, operator} = this.state;
-        const calFunRef = operatorMap[operator];
+        const calFunRef = oprMap[operator];
         const result = calFunRef(parseFloat(o1), parseFloat(o2));
         this.setState({result: result});
     }
