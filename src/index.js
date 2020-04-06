@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Calculator from './Calculator';
 import TicTacToe from './TicTacToe'
+//import TicTacToe1 from './TicTacToe'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
