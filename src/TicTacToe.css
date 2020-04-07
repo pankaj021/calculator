@@ -8,3 +8,9 @@
 .tic-tac-wrp .btn-cell {
   padding: 2rem !important;
 }
+.O {
+  background-color: yellow;
+}
+.X {
+  background-color: lightgreen;
+}
