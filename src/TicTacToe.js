@@ -7,8 +7,35 @@ const defaultState = {
     currPlayer: "",
     noOfGrid: 9,
     clickCount: 0,
-    gridDetails: {}
+    gridDetails: {},
+    winner: null,
+    winResult: ""
 }
+const winningComb = [
+    [
+        '00', '01', '02'
+    ],
+    [
+        '10', '11', '12'
+    ],
+    [
+        '20', '21', '22'
+    ],
+    [
+        '00', '10', '20'
+    ],
+    [
+        '01', '11', '21'
+    ],
+    [
+        '02', '12', '22'
+    ],
+    [
+        '00', '11', '22'
+    ],
+    ['02', '11', '20']
+];
+
 export default class TicTacToe extends React.Component {
     constructor() {
         super()
@@ -16,12 +43,21 @@ export default class TicTacToe extends React.Component {
     }
 
     btnClickHandler = (event, index) => {
-        let {clickCount, player1, player2, gridDetails} = this.state;
+        let {
+            clickCount,
+            player1,
+            player2,
+            gridDetails,
+            winner,
+            winResult
+        } = this.state;
         let gridDetailsCopy = {
             ...gridDetails
         };
+        if (winner || clickCount === 9) {
+            return this.restartGame();
+        }
         if (!gridDetails[index]) {
-            console.log("index: ", index);
             let currPlayer;
             if (clickCount % 2 === 0) {
                 currPlayer = player1;
@@ -32,16 +68,31 @@ export default class TicTacToe extends React.Component {
             }
             gridDetailsCopy[index] = currPlayer;
             clickCount += 1;
-            this.setState({clickCount, currPlayer, gridDetails: gridDetailsCopy})
+            const winner = this.checkWinner(gridDetailsCopy);
+            if (winner) 
+                winResult = `Player ${winner} has won the game.`
+            else if (clickCount === 9) 
+                winResult = `Match draw`
+            this.setState({clickCount, currPlayer, gridDetails: gridDetailsCopy, winner, winResult})
         }
     }
     restartGame = (event) => {
         this.setState(defaultState)
     }
+    checkWinner = (gridDetailsCopy) => {
+        let winner;
+        for (let i = 0; i < winningComb.length; i++) {
+            const row = winningComb[i];
+            if (gridDetailsCopy[row[0]] && (gridDetailsCopy[row[0]] === gridDetailsCopy[row[1]]) && (gridDetailsCopy[row[1]] === gridDetailsCopy[row[2]])) {
+                winner = gridDetailsCopy[row[0]]
+                break;
+            }
+        }
+        return winner;
+    }
     render() {
-        const {clickCount, currPlayer, gridDetails} = this.state;
+        const {gridDetails, winResult} = this.state;
         console.log("state: ", this.state);
-
         return (
             <div className="calculator-wrap tic-tac-wrp">
                 <button onClick={this.restartGame}>Restart</button>
@@ -81,7 +132,7 @@ export default class TicTacToe extends React.Component {
                     </div>
                 </div>
                 <div className='tic-tac-result'>
-                    <h2>Player 1 Won!!!</h2>
+                    <h2>{winResult}</h2>
                 </div>
             </div>
         )

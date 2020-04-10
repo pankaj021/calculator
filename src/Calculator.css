@@ -35,9 +35,9 @@ body {
   background: var(--mainWhite);
   cursor: pointer;
 }
-.btn-cell:hover {
+/* .btn-cell:hover {
   background: #ccc;
-}
+} */
 .display {
   padding: 0.5rem;
   border: 2px solid skyblue;
