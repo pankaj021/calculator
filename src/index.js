@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Calculator from './Calculator';
 import TicTacToe from './TicTacToe'
+import HandC from './HandC'
 //import TicTacToe1 from './TicTacToe'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <TicTacToe/>, document.getElementById('root'));
+  <HandC/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls. Learn
