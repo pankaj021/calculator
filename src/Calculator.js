@@ -1,6 +1,6 @@
 import React from 'react';
 import './Calculator.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function add(o1, o2) {
     return o1 + o2
