@@ -1,45 +1,47 @@
 import React from 'react';
 import './TicTacToe.css';
 
-
+let intiValaue = { boxValue :"",
+                 compValue  : "",
+                numberOfBowl: 0,
+                        result: "",
+                        totalRun :0,
+                        GameStatus :"About to start"
+}
 
 
 export default class HandC extends React.Component {
     constructor() {
         super()
-        this.state = { boxValue :"",
-                       compValue : "",
-                       numberOfBowl: 0,
-                        out: ""
-                     }
+        this.state = intiValaue
     }
     btnClickHandler = (event) => {
-        let {boxValue,compValue,numberOfBowl,out } = this.state
-        boxValue = event.target.innerText
-         console.log("clickedBn >>>>>",event.target.innerText)
+        let {boxValue,compValue,numberOfBowl,result,totalRun,GameStatus } = this.state
+         if( numberOfBowl!==6 && result!=='out'){
+            GameStatus ="Game in progress"    
+         boxValue = parseInt(event.target.innerText)
          compValue  = Math.ceil(Math.random()*6,1000*2)
          numberOfBowl  += 1
-         console.log('numberofbowl',numberOfBowl)
-         console.log('compValue',compValue)
-         if(compValue===boxValue)
-         {   out = 'gone'
-             
-           }
-         else if(numberOfBowl===6){
-             out = 'finish'
-         }
-        this.setState({boxValue,compValue,out,
-                            numberOfBowl})
-       console.log(out)      
-                                   
+        result = this.totalScore(boxValue,compValue)
+        } else{
+            GameStatus = 'GameOver'
+        }
+        this.setState({boxValue,compValue,result,numberOfBowl,totalRun,GameStatus})                                 
 }
+
+  totalScore (a, b){
+      let {totalRun} = this.state
+    if (a===b){ 
+        return 'out'
+    }else{
+        totalRun += a+b
+        return a+b
+    }
+
+  } 
+
 restartGame = (event) => {
-        this.setState({ boxValue :"",
-        compValue  : "",
-        numberOfBowl: 0,
-             out: ""
-     })
-    
+        this.setState(intiValaue)
     }
    
 render() {
@@ -50,9 +52,11 @@ render() {
             <div className="calculator-wrap tic-tac-wrp">
                 <button onClick={this.restartGame}>Restart</button>
                 <div className='display'>
-                    <h4>Player:{this.state.boxValue || 0} </h4>
-                    <h4> Computer:{this.state.compValue || 0}</h4>
-                    <h4> playerStatus:{this.state.out}</h4>
+                <h4>GameStatus :{this.state.GameStatus} </h4>
+                    <h4>Player :{this.state.boxValue || 0} </h4>
+                    <h4> Computer :{this.state.compValue || 0}</h4>
+                    <h4> playerScore :{this.state.result || ' -'}</h4>
+                    <h4> playerTotalScore :{this.state.totalRun || ' -'}</h4>
                    
                 </div>
                 <div className="container">

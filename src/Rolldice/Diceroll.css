@@ -1,0 +1,38 @@
+.tic-tac-wrp {
+    width: 25% !important;
+  }
+  .tic-tac-result {
+    margin: 1rem 0;
+    text-align: center;
+  }
+  .tic-tac-wrp .btn-cell {
+    padding: 2rem !important;
+    background-color: darkgray;
+    border-radius: 529px;
+    font-family: cursive;
+    
+  }
+  .O {
+    background-color: yellow;
+  }
+  .X {
+    background-color: lightgreen;
+  }
+  .row{
+    display: flex;
+  }
+.bet{
+    display: flex;
+}
+.display{
+    display: flex;
+}
+.bet1{
+    align-items: center;
+    font-family: none;
+    display: flex;
+}
+h4{
+    margin: auto;
+    font-size: larger;
+}
