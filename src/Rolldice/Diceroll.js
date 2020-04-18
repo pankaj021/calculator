@@ -7,7 +7,8 @@ let intiValaue = { betAmt: 500,
     count : 0,
     selectedValue :undefined,
     arrayOfValue : [],
-    result : undefined
+    result : undefined,
+    winAmt : 0
 }
 
 
@@ -30,37 +31,44 @@ export default class Diceroll extends React.Component {
       }
 
       onClickedDice = (event) => {
-        let {DiceValue,GameStatus,count,result,arrayOfValue} = this.state
+        let {DiceValue,GameStatus,count,result,arrayOfValue,selectedValue,winAmt} = this.state
         console.log("Array of value",arrayOfValue)
-        
-        if(count<=6)
+        console.log("selecValue clicked dice",selectedValue)
+        if(count<=6 && selectedValue!==undefined)
         {   GameStatus ='Game in progress'
             DiceValue = Math.ceil(Math.random()*6)
             result = this.winner(DiceValue)
+            
+
         count +=1}
         else{
             GameStatus ='Game is over'}
-             
-
-        this.setState({DiceValue,GameStatus,count,result })
+            console.log("winning amout before contion checking  ",winAmt)
+             winAmt = (result === 'win' )? winAmt : " -- "
+             console.log("winning amout After contion checking  ",winAmt)
+        this.setState({DiceValue,GameStatus,count,result,winAmt})
       }
         
       onClickedChoice = (event) =>{
-           let {selectedValue,arrayOfValue} = this.state
+           let {selectedValue,arrayOfValue,betAmt,winAmt} = this.state
            selectedValue = event.target.innerText
            if(selectedValue==="1 To 3")
            {
                arrayOfValue = [1,2,3]
+               winAmt = betAmt*2
                console.log("arrayOf Value",arrayOfValue)
            }else if(selectedValue==="4 To 5")
               {
                 arrayOfValue = [4,5]
+                winAmt = betAmt*3
                 console.log("arrayOf Value",arrayOfValue)
               }else{
 
                 arrayOfValue = [6]
+                winAmt = betAmt*4
                 console.log("arrayOf Value",arrayOfValue)
               }
+                 this.setState({selectedValue,arrayOfValue})
       }
       winner(a)
       { let {arrayOfValue} = this.state
@@ -69,7 +77,7 @@ export default class Diceroll extends React.Component {
                 if(arrayOfValue[i]===a)
                      return "win"
             }
-        
+           return 'loss'
       }
     
 
@@ -78,7 +86,7 @@ restartGame = (event) => {
     }
    
 render() {
-        
+        let {result,winAmt} = this.state
         console.log("state: ",this.state);
         return (
             
@@ -88,6 +96,7 @@ render() {
                 <h4>GameStatus :{this.state.GameStatus} </h4></div>
                 <h4> DiceValue :{this.state.DiceValue  || 0}</h4>
                 <h4> Result :{this.state.result || " -- "}</h4>
+               <h4> Winning :{this.state.winAmt}</h4>
                 <div className="container">
                      <div className='display'>
                            <div
