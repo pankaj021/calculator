@@ -7,17 +7,19 @@ let intiValaue = {
     DiceValue: 0,
     count: 0,
     selectedValue: undefined,
-    arrayOfValue: [],
     result: undefined,
     winAmt: 0,
-    totalRolled :[],
-    totalWinAmt : []
+    arrayOfValue: [],
+    totalRolled: [],
+    totalWinAmt: []
 }
 
 export default class Diceroll extends React.Component {
     constructor() {
         super()
-        this.state = intiValaue
+        this.state = {
+            ...intiValaue
+        }
     }
 
     onClickedBetAmt = (event) => {
@@ -68,11 +70,19 @@ export default class Diceroll extends React.Component {
                 winAmt += betAmt * 4
             }
         } else {
-            winAmt = winAmt-betAmt
+            winAmt = winAmt - betAmt
         }
         totalWinAmt.push(winAmt)
         console.log("winning amout After condition checking  ", winAmt)
-        this.setState({DiceValue, GameStatus, count, result, winAmt,totalRolled,totalWinAmt})
+        this.setState({
+            DiceValue,
+            GameStatus,
+            count,
+            result,
+            winAmt,
+            totalRolled,
+            totalWinAmt
+        })
     }
 
     onClickedChoice = (event) => {
@@ -105,12 +115,16 @@ export default class Diceroll extends React.Component {
     }
 
     restartGame = (event) => {
-        this.setState(intiValaue)
-        console.log("after called restart fun",this.state)
+        this.setState({
+            ...intiValaue,
+            arrayOfValue: [],
+            totalRolled: [],
+            totalWinAmt: []
+        })
     }
 
     render() {
-        let {result, winAmt,DiceValue,totalRolled,totalWinAmt} = this.state
+        let {result, winAmt, DiceValue, totalRolled, totalWinAmt} = this.state
         console.log("state: ", this.state);
         return (
 
@@ -140,9 +154,9 @@ export default class Diceroll extends React.Component {
                     </div>
                 </div>
                 <div >
-                {totalRolled.map((digit, index) => <span key={index} className='run-circle'>{digit}</span>)}</div>
+                    {totalRolled.map((digit, index) => <span key={index} className='run-circle'>{digit}</span>)}</div>
                 <div>
-                {totalWinAmt.map((score, index) => <span key={index} className='run-circle'>{score}</span>)}</div>
+                    {totalWinAmt.map((score, index) => <span key={index} className='run-circle'>{score}</span>)}</div>
                 <div className="btn-cell " onClick={this.onClickedDice}>Roll Dice</div>
 
             </div>
