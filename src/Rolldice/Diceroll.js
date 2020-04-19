@@ -9,7 +9,9 @@ let intiValaue = {
     selectedValue: undefined,
     arrayOfValue: [],
     result: undefined,
-    winAmt: 0
+    winAmt: 0,
+    totalRolled :[],
+    totalWinAmt : []
 }
 
 export default class Diceroll extends React.Component {
@@ -39,33 +41,38 @@ export default class Diceroll extends React.Component {
             betAmt,
             arrayOfValue,
             selectedValue,
-            winAmt
+            winAmt,
+            totalRolled,
+            totalWinAmt
         } = this.state
         console.log("Array of value", arrayOfValue)
         console.log("selecValue clicked dice", selectedValue)
         if (count <= 6 && selectedValue !== undefined) {
             GameStatus = 'Game in progress'
             DiceValue = Math.ceil(Math.random() * 6)
+            totalRolled.push(DiceValue)
             result = this.winner(DiceValue)
 
             count += 1
         } else {
             GameStatus = 'Game is over'
+            //totalRolled =[]
         }
         console.log("winning amout before contion checking  ", winAmt)
         if (result === 'win') {
             if (selectedValue === "1 To 3") {
-                winAmt = betAmt * 2
+                winAmt += betAmt * 2
             } else if (selectedValue === "4 To 5") {
-                winAmt = betAmt * 3
+                winAmt += betAmt * 3
             } else {
-                winAmt = betAmt * 4
+                winAmt += betAmt * 4
             }
         } else {
-            winAmt = '--'
+            winAmt = winAmt-betAmt
         }
-        console.log("winning amout After contion checking  ", winAmt)
-        this.setState({DiceValue, GameStatus, count, result, winAmt})
+        totalWinAmt.push(winAmt)
+        console.log("winning amout After condition checking  ", winAmt)
+        this.setState({DiceValue, GameStatus, count, result, winAmt,totalRolled,totalWinAmt})
     }
 
     onClickedChoice = (event) => {
@@ -99,10 +106,11 @@ export default class Diceroll extends React.Component {
 
     restartGame = (event) => {
         this.setState(intiValaue)
+        console.log("after called restart fun",this.state)
     }
 
     render() {
-        let {result, winAmt} = this.state
+        let {result, winAmt,DiceValue,totalRolled,totalWinAmt} = this.state
         console.log("state: ", this.state);
         return (
 
@@ -113,11 +121,11 @@ export default class Diceroll extends React.Component {
                     </h4>
                 </div>
                 <h4>
-                    DiceValue :{this.state.DiceValue || 0}</h4>
+                    DiceValue :{DiceValue || 0}</h4>
                 <h4>
-                    Result :{this.state.result || " -- "}</h4>
+                    Result :{result || " -- "}</h4>
                 <h4>
-                    Winning :{this.state.winAmt}</h4>
+                    Winning :{winAmt}</h4>
                 <div className="container">
                     <div className='display'>
                         <div className="btn-cell" onClick={this.onClickedChoice}>1 To 3</div>
@@ -131,6 +139,10 @@ export default class Diceroll extends React.Component {
                         <div className="btn-cell " onClick={this.onClickedBetAmt}>+</div>
                     </div>
                 </div>
+                <div >
+                {totalRolled.map((digit, index) => <span key={index} className='run-circle'>{digit}</span>)}</div>
+                <div>
+                {totalWinAmt.map((score, index) => <span key={index} className='run-circle'>{score}</span>)}</div>
                 <div className="btn-cell " onClick={this.onClickedDice}>Roll Dice</div>
 
             </div>
