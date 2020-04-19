@@ -52,7 +52,10 @@ export default class Diceroll extends React.Component {
         if (count <= 6 && selectedValue !== undefined) {
             GameStatus = 'Game in progress'
             DiceValue = Math.ceil(Math.random() * 6)
-            totalRolled.push(DiceValue)
+            totalRolled = [
+                ...totalRolled,
+                DiceValue
+            ]
             result = this.winner(DiceValue)
 
             count += 1
@@ -72,7 +75,6 @@ export default class Diceroll extends React.Component {
         } else {
             winAmt = winAmt - betAmt
         }
-        totalWinAmt.push(winAmt)
         console.log("winning amout After condition checking  ", winAmt)
         this.setState({
             DiceValue,
@@ -81,7 +83,10 @@ export default class Diceroll extends React.Component {
             result,
             winAmt,
             totalRolled,
-            totalWinAmt
+            totalWinAmt: [
+                ...totalWinAmt,
+                winAmt
+            ]
         })
     }
 
@@ -115,12 +120,7 @@ export default class Diceroll extends React.Component {
     }
 
     restartGame = (event) => {
-        this.setState({
-            ...intiValaue,
-            arrayOfValue: [],
-            totalRolled: [],
-            totalWinAmt: []
-        })
+        this.setState(intiValaue)
     }
 
     render() {
